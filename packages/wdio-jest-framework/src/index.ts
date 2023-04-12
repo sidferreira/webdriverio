@@ -50,10 +50,8 @@ class JestAdapter {
             testMatch,
             testEnvironment: './node_modules/@wdio/jest-framework/build/wdio-jest-environment.js',
             setupFilesAfterEnv: ['./node_modules/@wdio/jest-framework/build/wdio-jest-setup-after-env.js'],
-            // validating
-            preset: 'react-native',
             transformIgnorePatterns: [
-                'node_modules/(?!((jest-)?react-native|@react-native(-community)?|expect-webdriverio|@wdio/jest-framework)/)',
+                'node_modules/(?!(expect-webdriverio|@wdio/jest-framework)/)',
             ],
         })
     }

@@ -24,6 +24,8 @@ class JestAdapter {
     private _jestSuiteStack:any[] = []
     private _jestTestStack:any[] = []
     private _eventEmitter: EventEmitter
+    private _testCount = 0
+    private _failedCount = 0
 
     constructor(
         private _cid: string,
@@ -74,6 +76,7 @@ class JestAdapter {
             '--config',
             JSON.stringify(this._jestOpts)
         ])
+        return this._failedCount
     }
 
     onJestEvent (event:Circus.AsyncEvent | Circus.SyncEvent, state: Circus.State) {
@@ -98,6 +101,7 @@ class JestAdapter {
         }
         case 'test_start': {
             this.emit('test:start', { test: event.test })
+            this._testCount++
             return
         }
         case 'test_fn_success': {
@@ -106,6 +110,7 @@ class JestAdapter {
         }
         case 'test_fn_failure': {
             this.emit('test:fail', { test: event.test })
+            this._failedCount++
             return
         }
         case 'test_done': {
